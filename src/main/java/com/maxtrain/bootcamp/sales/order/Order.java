@@ -1,8 +1,11 @@
 package com.maxtrain.bootcamp.sales.order;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.maxtrain.bootcamp.sales.customer.Customer;
+import com.maxtrain.bootcamp.sales.orderline.Orderline;
 
 import jakarta.persistence.*;
 @Entity
@@ -24,6 +27,18 @@ public class Order {
 	@JoinColumn(name="customerId", columnDefinition="int")
 	private Customer customer;
 
+	@JsonManagedReference
+	@OneToMany(mappedBy="order")
+	private List<Orderline> orderlines;
+	
+	public List<Orderline> getOrderlines(){
+		return orderlines;
+	}
+	
+	public void setOrderlines (List<Orderline> orderlines) {
+		this.orderlines = orderlines;
+	}
+	
 	public int getId() {
 		return id;
 	}
